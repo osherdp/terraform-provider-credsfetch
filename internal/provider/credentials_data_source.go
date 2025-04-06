@@ -6,7 +6,6 @@ package provider
 import (
 	"context"
 	"fmt"
-	"net/http"
 
 	"github.com/aws/aws-sdk-go-v2/config"
 
@@ -24,7 +23,6 @@ func NewExampleDataSource() datasource.DataSource {
 
 // CredentialsDataSource defines the data source implementation.
 type CredentialsDataSource struct {
-	client *http.Client
 }
 
 // ExampleDataSourceModel describes the data source data model.
@@ -66,26 +64,6 @@ func (d *CredentialsDataSource) Schema(ctx context.Context, req datasource.Schem
 			},
 		},
 	}
-}
-
-func (d *CredentialsDataSource) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
-	// Prevent panic if the provider has not been configured.
-	if req.ProviderData == nil {
-		return
-	}
-
-	client, ok := req.ProviderData.(*http.Client)
-
-	if !ok {
-		resp.Diagnostics.AddError(
-			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *http.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
-		)
-
-		return
-	}
-
-	d.client = client
 }
 
 func (d *CredentialsDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
