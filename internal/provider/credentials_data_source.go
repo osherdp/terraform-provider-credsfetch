@@ -52,14 +52,17 @@ func (d *CredentialsDataSource) Schema(ctx context.Context, req datasource.Schem
 			"access_key_id": schema.StringAttribute{
 				MarkdownDescription: "AWS access key ID",
 				Computed:            true,
+				Sensitive:           true,
 			},
 			"secret_access_key": schema.StringAttribute{
 				MarkdownDescription: "AWS secret access key",
 				Computed:            true,
+				Sensitive:           true,
 			},
 			"session_token": schema.StringAttribute{
 				MarkdownDescription: "AWS session token",
 				Computed:            true,
+				Sensitive:           true,
 			},
 		},
 	}
@@ -88,14 +91,12 @@ func (d *CredentialsDataSource) Configure(ctx context.Context, req datasource.Co
 func (d *CredentialsDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var data ExampleDataSourceModel
 
-	// Read Terraform configuration data into the model
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	// getting the profile:
 	profile := data.Profile.ValueString()
 
 	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithSharedConfigProfile(profile))
@@ -120,6 +121,5 @@ func (d *CredentialsDataSource) Read(ctx context.Context, req datasource.ReadReq
 	data.SecretAccessKey = types.StringValue(credentials.SecretAccessKey)
 	data.SessionToken = types.StringValue(credentials.SessionToken)
 
-	// Save data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
