@@ -50,7 +50,7 @@ func (p *CredsFetchProvider) Configure(ctx context.Context, req provider.Configu
 func (p *CredsFetchProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		func() datasource.DataSource {
-			return NewExampleDataSource()
+			return NewCredentialsDataSource()
 		},
 	}
 }

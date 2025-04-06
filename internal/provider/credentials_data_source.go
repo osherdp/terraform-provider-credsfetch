@@ -17,7 +17,7 @@ import (
 // Ensure provider defined types fully satisfy framework interfaces.
 var _ datasource.DataSource = &CredentialsDataSource{}
 
-func NewExampleDataSource() datasource.DataSource {
+func NewCredentialsDataSource() datasource.DataSource {
 	return &CredentialsDataSource{}
 }
 
@@ -25,8 +25,8 @@ func NewExampleDataSource() datasource.DataSource {
 type CredentialsDataSource struct {
 }
 
-// ExampleDataSourceModel describes the data source data model.
-type ExampleDataSourceModel struct {
+// CredentialsDataSourceModel describes the data source data model.
+type CredentialsDataSourceModel struct {
 	Profile         types.String `tfsdk:"profile"`
 	AccessKeyID     types.String `tfsdk:"access_key_id"`
 	SecretAccessKey types.String `tfsdk:"secret_access_key"`
@@ -40,11 +40,11 @@ func (d *CredentialsDataSource) Metadata(ctx context.Context, req datasource.Met
 func (d *CredentialsDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "Example data source",
+		MarkdownDescription: "Credentials data source",
 
 		Attributes: map[string]schema.Attribute{
 			"profile": schema.StringAttribute{
-				MarkdownDescription: "Example configurable attribute",
+				MarkdownDescription: "AWS profile name",
 				Optional:            true,
 			},
 			"access_key_id": schema.StringAttribute{
@@ -67,7 +67,7 @@ func (d *CredentialsDataSource) Schema(ctx context.Context, req datasource.Schem
 }
 
 func (d *CredentialsDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data ExampleDataSourceModel
+	var data CredentialsDataSourceModel
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 
