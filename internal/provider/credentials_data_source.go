@@ -29,10 +29,10 @@ type CredentialsDataSource struct {
 
 // ExampleDataSourceModel describes the data source data model.
 type ExampleDataSourceModel struct {
-	Profile types.String `tfsdk:"profile"`
-	AccessKeyID types.String `tfsdk:"access_key_id"`
+	Profile         types.String `tfsdk:"profile"`
+	AccessKeyID     types.String `tfsdk:"access_key_id"`
 	SecretAccessKey types.String `tfsdk:"secret_access_key"`
-	SessionToken types.String `tfsdk:"session_token"`
+	SessionToken    types.String `tfsdk:"session_token"`
 }
 
 func (d *CredentialsDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
