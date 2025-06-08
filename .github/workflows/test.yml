@@ -63,13 +63,35 @@ jobs:
       matrix:
         # list whatever Terraform versions here you would like to support
         terraform:
-          - '1.0.*'
-          - '1.1.*'
-          - '1.2.*'
-          - '1.3.*'
           - '1.4.*'
+          - '1.5.*'
+          - '1.6.*'
+          - '1.7.*'
+          - '1.8.*'
+          - '1.9.*'
+          - '1.10.*'
+          - '1.11.*'
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Start LocalStack
+        uses: LocalStack/setup-localstack@v0.2.3
+        with:
+          image-tag: 'latest'
+          install-awslocal: 'true'
+      - name: Write AWS credentials and configuration for localstack
+        run: |
+          mkdir ~/.aws
+          cat > ~/.aws/credentials << 'EOF'
+          [default]
+          aws_access_key_id = test
+          aws_secret_access_key = test
+          EOF
+
+          cat > ~/.aws/config << 'EOF'
+          [default]
+          region = us-east-1
+          endpoint_url = http://localhost:4566
+          EOF
       - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5.3.0
         with:
           go-version-file: 'go.mod'
