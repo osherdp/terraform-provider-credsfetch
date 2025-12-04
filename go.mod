@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/aws/aws-sdk-go-v2/config v1.32.3
-	github.com/hashicorp/terraform-plugin-framework v1.16.1
+	github.com/hashicorp/terraform-plugin-framework v1.17.0
 	github.com/hashicorp/terraform-plugin-go v0.29.0
 	github.com/hashicorp/terraform-plugin-testing v1.14.0
 )
